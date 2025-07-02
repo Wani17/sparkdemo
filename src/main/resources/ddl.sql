@@ -15,9 +15,9 @@ CREATE TABLE users (
 );
 
 CREATE TABLE answers (
-       id	char(36)	NOT NULL,
-       writer	char(36)	NOT NULL,
-       question_id	char(36)	NOT NULL,
-       content	varchar(2000)	NOT NULL,
-       date	timestamp	NOT NULL
+   id	char(36)	NOT NULL,
+   writer	char(36)	NOT NULL,
+   question_id	char(36)	NOT NULL,
+   content	varchar(2000)	NOT NULL,
+   date	timestamp	NOT NULL
 );

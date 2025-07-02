@@ -1,5 +1,6 @@
 package com.example.demo.auth.service;
 
+import com.example.demo.auth.dto.LoginRequest;
 import com.example.demo.user.domain.User;
 import com.example.demo.auth.dto.SignupRequest;
 import com.example.demo.auth.repository.AuthRepository;
@@ -21,6 +22,16 @@ public class AuthService {
             throw new IllegalArgumentException("Email already in use");
         }
         // TODO: JWT implementation
-        authRepository.save(User.newUser(dto, encoder));
+        authRepository.save(User.of(dto, encoder));
+    }
+
+    @Transactional
+    public void login(LoginRequest dto, HttpServletResponse response) {
+        User user = authRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Incorrect email or password"));
+
+        if(!user.matchPassword(dto.getPassword(), encoder)) {
+            throw new IllegalArgumentException("Incorrect email or password");
+        }
     }
 }
