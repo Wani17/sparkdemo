@@ -3,6 +3,7 @@ package com.example.demo.user.domain;
 import com.example.demo.auth.dto.SignupRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
+    @Getter
     @Column(length = 36)
     private String id;
 
@@ -29,6 +31,11 @@ public class User {
 
     @Column(nullable = false, length = 10)
     private String nickname;
+
+    @Getter
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private static String generateSalt(int length) {
         SecureRandom sr = new SecureRandom();
@@ -57,6 +64,7 @@ public class User {
         user.salt = salt;
         user.password = encoder.encode(dto.getPassword() + salt);
         user.nickname = dto.getNickname();
+        user.role = Role.USER;
         return user;
     }
 }

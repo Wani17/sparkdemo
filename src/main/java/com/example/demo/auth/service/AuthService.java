@@ -15,14 +15,17 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final AuthRepository authRepository;
     private final PasswordEncoder encoder;
+    private final TokenService tokenService;
 
     @Transactional
     public void signup(SignupRequest dto, HttpServletResponse response) {
         if(authRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("Email already in use");
         }
-        // TODO: JWT implementation
-        authRepository.save(User.of(dto, encoder));
+
+        User user = User.of(dto, encoder);
+        authRepository.save(user);
+        tokenService.issue(user, response);
     }
 
     @Transactional
@@ -33,5 +36,7 @@ public class AuthService {
         if(!user.matchPassword(dto.getPassword(), encoder)) {
             throw new IllegalArgumentException("Incorrect email or password");
         }
+
+        tokenService.issue(user, response);
     }
 }
