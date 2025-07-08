@@ -34,6 +34,10 @@ public class TokenService {
         response.addCookie(createCookie(REFRESH_COOKIE_NAME, refreshToken.getToken(), authProvider.getRefreshTokExp()));
     }
 
+    public void reissue(User user, HttpServletResponse response) {
+
+    }
+
     private Cookie createCookie(String name, String value, long maxAgeMillis) {
         Cookie cookie = new Cookie(name, value);
         cookie.setHttpOnly(true);

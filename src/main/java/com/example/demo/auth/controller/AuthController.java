@@ -23,22 +23,14 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequest dto, HttpServletResponse response) {
-        try {
-            authService.signup(dto, response);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        authService.signup(dto, response);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest dto, HttpServletResponse response) {
-        try {
-            authService.login(dto, response);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        authService.login(dto, response);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/logout")
@@ -46,5 +38,11 @@ public class AuthController {
         tokenService.cancel(response);
         refreshService.removeRefreshToken(request);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) {
+        // ???
+        return ResponseEntity.ok().build();
     }
 }

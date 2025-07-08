@@ -1,15 +1,10 @@
 package com.example.demo.user.domain;
 
-import com.example.demo.auth.dto.SignupRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.UUID;
 

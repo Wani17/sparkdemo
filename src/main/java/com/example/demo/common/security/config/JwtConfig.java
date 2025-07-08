@@ -1,7 +1,6 @@
 package com.example.demo.common.security.config;
 
 import com.example.demo.common.security.jwt.AuthProvider;
-import io.jsonwebtoken.Jwt;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

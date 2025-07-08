@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 @SpringBootTest
 public class JwtProviderTest {
     @Autowired
@@ -13,9 +15,8 @@ public class JwtProviderTest {
 
     @Test
     void testJwtProvider() {
-        Long userId = 123L;
-//        String token = jwtProvider.createAccessToken(userId, Role.USER);
-
-//        System.out.println("Token: " + token);
+        UUID userId = UUID.randomUUID();
+        String token = jwtProvider.createAccessToken(userId, Role.USER).getToken();
+        System.out.println("Token: " + token);
     }
 }

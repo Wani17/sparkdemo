@@ -1,6 +1,8 @@
 package com.example.demo.auth.service;
 
 import com.example.demo.auth.dto.LoginRequest;
+import com.example.demo.common.exception.ErrorCode;
+import com.example.demo.common.exception.domain.AuthException;
 import com.example.demo.user.domain.User;
 import com.example.demo.auth.dto.SignupRequest;
 import com.example.demo.auth.repository.AuthRepository;
@@ -20,7 +22,7 @@ public class AuthService {
     @Transactional
     public void signup(SignupRequest dto, HttpServletResponse response) {
         if(authRepository.existsByEmail(dto.getEmail())) {
-            throw new IllegalArgumentException("Email already in use");
+            throw new AuthException(ErrorCode.AUTH_SIGNUP_FAILED);
         }
 
         User user = User.of(dto, encoder);
@@ -34,7 +36,7 @@ public class AuthService {
                 .orElseThrow(() -> new IllegalArgumentException("Incorrect email or password"));
 
         if(!user.matchPassword(dto.getPassword(), encoder)) {
-            throw new IllegalArgumentException("Incorrect email or password");
+            throw new AuthException(ErrorCode.AUTH_LOGIN_FAILED);
         }
 
         tokenService.issue(user, response);
